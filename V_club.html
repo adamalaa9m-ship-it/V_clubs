@@ -8,19 +8,18 @@
         body {
             background-color: #0d0f17;
             color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             text-align: center;
         }
         header {
             background: #161926;
-            padding: 20px;
+            padding: 15px 40px;
             border-bottom: 2px solid #6366f1;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 40px;
         }
         .logo {
             font-size: 24px;
@@ -28,41 +27,25 @@
             color: #6366f1;
             letter-spacing: 2px;
         }
-        .hero {
-            padding: 60px 20px;
-        }
-        .hero h1 {
-            font-size: 48px;
-            margin-bottom: 10px;
-            color: #ffffff;
-        }
-        .hero p {
-            color: #94a3b8;
-            font-size: 18px;
-        }
+        .hero { padding: 50px 20px; }
+        .hero h1 { font-size: 40px; margin-bottom: 10px; }
+        .hero p { color: #94a3b8; font-size: 18px; }
         .btn {
             background: #6366f1;
             color: white;
             border: none;
             padding: 12px 24px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: bold;
             border-radius: 8px;
             cursor: pointer;
-            margin-top: 20px;
             transition: 0.3s;
         }
-        .btn:hover {
-            background: #4f46e5;
-        }
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+        .btn:hover { background: #4f46e5; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
             margin-top: 30px;
         }
@@ -72,6 +55,8 @@
             border-radius: 12px;
             padding: 15px;
             text-align: left;
+            display: flex;
+            flex-direction: column;
         }
         .card img {
             width: 100%;
@@ -79,14 +64,38 @@
             object-fit: cover;
             border-radius: 8px;
         }
-        .card h3 {
-            margin: 10px 0 5px;
-            font-size: 18px;
+        .card h3 { margin: 10px 0 5px; font-size: 18px; }
+        .price { color: #6366f1; font-size: 20px; font-weight: bold; margin-bottom: 10px; }
+
+        /* Modal styling */
+        .modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
         }
-        .price {
-            color: #6366f1;
-            font-size: 20px;
-            font-weight: bold;
+        .modal-content {
+            background: #161926;
+            padding: 25px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 400px;
+            text-align: left;
+            border: 1px solid #6366f1;
+        }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; color: #94a3b8; }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            background: #0d0f17;
+            border: 1px solid #2d3748;
+            color: white;
+            border-radius: 6px;
+            box-sizing: border-box;
         }
     </style>
 </head>
@@ -94,9 +103,7 @@
 
     <header>
         <div class="logo">V_CLUB</div>
-        <div>
-            <button class="btn" style="margin: 0;" onclick="addProduct()">+ Add T-Shirt</button>
-        </div>
+        <button class="btn" onclick="addProduct()">+ Add T-Shirt</button>
     </header>
 
     <div class="hero">
@@ -107,21 +114,88 @@
     <div class="container">
         <h2 style="text-align: left;">Latest Apparel Drops</h2>
         <div class="grid" id="productGrid">
-            <!-- Example Item -->
             <div class="card">
                 <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500" alt="Tshirt">
                 <h3>V_CLUB Classic Black Tee</h3>
                 <div class="price">$29.99</div>
-                <button class="btn" style="width: 100%; margin-top: 10px;">Buy Now</button>
+                <button class="btn" style="width: 100%; margin-top: auto;" onclick="buyNow('V_CLUB Classic Black Tee', '29.99')">Buy Now</button>
+            </div>
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=500" alt="Tshirt">
+                <h3>V_CLUB Oversized Tee</h3>
+                <div class="price">$35.00</div>
+                <button class="btn" style="width: 100%; margin-top: auto;" onclick="buyNow('V_CLUB Oversized Tee', '35.00')">Buy Now</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Buy Now Order Modal -->
+    <div class="modal" id="orderModal">
+        <div class="modal-content">
+            <h3 id="modalTitle" style="margin-bottom: 15px; color: #6366f1;">Order Item</h3>
+            <div class="form-group">
+                <label>Your Name</label>
+                <input type="text" id="custName" placeholder="John Doe">
+            </div>
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="text" id="custPhone" placeholder="010xxxxxxx">
+            </div>
+            <div class="form-group">
+                <label>Size</label>
+                <select id="custSize">
+                    <option>Small (S)</option>
+                    <option selected>Medium (M)</option>
+                    <option>Large (L)</option>
+                    <option>X-Large (XL)</option>
+                </select>
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="btn" onclick="submitOrder()" style="flex: 1;">Confirm Order</button>
+                <button class="btn" onclick="closeOrderModal()" style="background: #334155; flex: 1;">Cancel</button>
             </div>
         </div>
     </div>
 
     <script>
+        // غيّر هذا الرقم برقم الواتساب الخاص بك (مع كود الدولة مثل 20 لمصر)
+        const MY_WHATSAPP_NUMBER = "201000000000"; 
+
+        let selectedProduct = "";
+        let selectedPrice = "";
+
+        function buyNow(title, price) {
+            selectedProduct = title;
+            selectedPrice = price;
+            document.getElementById('modalTitle').innerText = "Buy " + title + " ($" + price + ")";
+            document.getElementById('orderModal').style.display = 'flex';
+        }
+
+        function closeOrderModal() {
+            document.getElementById('orderModal').style.display = 'none';
+        }
+
+        function submitOrder() {
+            let name = document.getElementById('custName').value;
+            let phone = document.getElementById('custPhone').value;
+            let size = document.getElementById('custSize').value;
+
+            if(!name || !phone) {
+                alert("Please fill in your name and phone number.");
+                return;
+            }
+
+            // تجهيز نص الرسالة وتوجيه العميل للواتساب تلقائياً
+            let message = `Hello V_CLUB! I want to order:%0A- Product: ${selectedProduct}%0A- Price: $${selectedPrice}%0A- Size: ${size}%0A- Customer Name: ${name}%0A- Phone: ${phone}`;
+            
+            window.open(`https://wa.me/${MY_WHATSAPP_NUMBER}?text=${message}`, '_blank');
+            closeOrderModal();
+        }
+
         function addProduct() {
-            let title = prompt("Enter T-Shirt Name:", "V_CLUB Oversized Tee");
-            let price = prompt("Enter Price ($):", "35.00");
-            let img = prompt("Enter Image URL (or leave default):", "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=500");
+            let title = prompt("Enter T-Shirt Name:", "V_CLUB New Tee");
+            let price = prompt("Enter Price ($):", "30.00");
+            let img = prompt("Enter Image URL:", "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=500");
 
             if (title && price) {
                 let grid = document.getElementById('productGrid');
@@ -130,7 +204,7 @@
                         <img src="${img}" alt="${title}">
                         <h3>${title}</h3>
                         <div class="price">$${price}</div>
-                        <button class="btn" style="width: 100%; margin-top: 10px;">Buy Now</button>
+                        <button class="btn" style="width: 100%; margin-top: auto;" onclick="buyNow('${title}', '${price}')">Buy Now</button>
                     </div>
                 `;
             }
