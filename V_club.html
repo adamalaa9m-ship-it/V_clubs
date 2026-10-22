@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V_CLUB | Official Store</title>
+    <style>
+        body {
+            background-color: #0d0f17;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        header {
+            background: #161926;
+            padding: 20px;
+            border-bottom: 2px solid #6366f1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #6366f1;
+            letter-spacing: 2px;
+        }
+        .hero {
+            padding: 60px 20px;
+        }
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+        .hero p {
+            color: #94a3b8;
+            font-size: 18px;
+        }
+        .btn {
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background: #4f46e5;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .card {
+            background: #161926;
+            border: 1px solid #2d3748;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: left;
+        }
+        .card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .card h3 {
+            margin: 10px 0 5px;
+            font-size: 18px;
+        }
+        .price {
+            color: #6366f1;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">V_CLUB</div>
+        <div>
+            <button class="btn" style="margin: 0;" onclick="addProduct()">+ Add T-Shirt</button>
+        </div>
+    </header>
+
+    <div class="hero">
+        <h1>WELCOME TO V_CLUB</h1>
+        <p>Exclusive Streetwear & Apparel Collection</p>
+    </div>
+
+    <div class="container">
+        <h2 style="text-align: left;">Latest Apparel Drops</h2>
+        <div class="grid" id="productGrid">
+            <!-- Example Item -->
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500" alt="Tshirt">
+                <h3>V_CLUB Classic Black Tee</h3>
+                <div class="price">$29.99</div>
+                <button class="btn" style="width: 100%; margin-top: 10px;">Buy Now</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function addProduct() {
+            let title = prompt("Enter T-Shirt Name:", "V_CLUB Oversized Tee");
+            let price = prompt("Enter Price ($):", "35.00");
+            let img = prompt("Enter Image URL (or leave default):", "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=500");
+
+            if (title && price) {
+                let grid = document.getElementById('productGrid');
+                grid.innerHTML += `
+                    <div class="card">
+                        <img src="${img}" alt="${title}">
+                        <h3>${title}</h3>
+                        <div class="price">$${price}</div>
+                        <button class="btn" style="width: 100%; margin-top: 10px;">Buy Now</button>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
