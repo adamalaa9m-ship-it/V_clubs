@@ -67,7 +67,6 @@
         .card h3 { margin: 10px 0 5px; font-size: 18px; }
         .price { color: #6366f1; font-size: 20px; font-weight: bold; margin-bottom: 10px; }
 
-        /* Modal styling */
         .modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -113,20 +112,8 @@
 
     <div class="container">
         <h2 style="text-align: left;">Latest Apparel Drops</h2>
-        <div class="grid" id="productGrid">
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500" alt="Tshirt">
-                <h3>V_CLUB Classic Black Tee</h3>
-                <div class="price">$29.99</div>
-                <button class="btn" style="width: 100%; margin-top: auto;" onclick="buyNow('V_CLUB Classic Black Tee', '29.99')">Buy Now</button>
-            </div>
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=500" alt="Tshirt">
-                <h3>V_CLUB Oversized Tee</h3>
-                <div class="price">$35.00</div>
-                <button class="btn" style="width: 100%; margin-top: auto;" onclick="buyNow('V_CLUB Oversized Tee', '35.00')">Buy Now</button>
-            </div>
-        </div>
+        <!-- المتجر فارغ وجاهز لتضيف فيه منتجاتك فقط بضغط زر Add T-Shirt -->
+        <div class="grid" id="productGrid"></div>
     </div>
 
     <!-- Buy Now Order Modal -->
@@ -135,7 +122,7 @@
             <h3 id="modalTitle" style="margin-bottom: 15px; color: #6366f1;">Order Item</h3>
             <div class="form-group">
                 <label>Your Name</label>
-                <input type="text" id="custName" placeholder="John Doe">
+                <input type="text" id="custName" placeholder="Enter your name">
             </div>
             <div class="form-group">
                 <label>Phone Number</label>
@@ -158,8 +145,8 @@
     </div>
 
     <script>
-        // غيّر هذا الرقم برقم الواتساب الخاص بك (مع كود الدولة مثل 20 لمصر)
-        const MY_WHATSAPP_NUMBER = "201000000000"; 
+        // اكتب رقم الواتساب الخاص بك هنا (مع كود الدولة)
+        const MY_WHATSAPP_NUMBER = "201007587568"; 
 
         let selectedProduct = "";
         let selectedPrice = "";
@@ -185,7 +172,6 @@
                 return;
             }
 
-            // تجهيز نص الرسالة وتوجيه العميل للواتساب تلقائياً
             let message = `Hello V_CLUB! I want to order:%0A- Product: ${selectedProduct}%0A- Price: $${selectedPrice}%0A- Size: ${size}%0A- Customer Name: ${name}%0A- Phone: ${phone}`;
             
             window.open(`https://wa.me/${const MY_WHATSAPP_NUMBER = "201007587568";}?text=${message}`, '_blank');
